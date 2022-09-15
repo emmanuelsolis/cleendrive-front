@@ -33,7 +33,7 @@ export default function ProfilePage(props) {
             .then(res => {
                 const { status, data, errorMessage } = res;
                 console.log("este es el Res:",res)
-                    console.log("las PROPS", props.user.firstN_name, props.user.last_name)
+                    console.log("las PROPS", props.user.firstName, props.user.last_name)
 
                 if (status) {
                     props.authentication(data.user);
@@ -61,7 +61,7 @@ export default function ProfilePage(props) {
             {/* Modal */}
             <Descriptions title="User Info">
                 <>
-                    <Descriptions.Item label="Nombre">{`${props.user.first_name} ${props.user.last_name}`}</Descriptions.Item>
+                    <Descriptions.Item label="Nombre">{`${props.user.firstName} ${props.user.lastName}`}</Descriptions.Item>
                     <Descriptions.Item label="email">{props.user.email}</Descriptions.Item>
                     <Descriptions.Item label="rol">{props.user.role}</Descriptions.Item>
                 </>
@@ -69,11 +69,11 @@ export default function ProfilePage(props) {
             <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <FormItem
                     label="Nombre"
-                    name="first_name"
+                    name="firstName"
                 />
                 <FormItem
                     label="Apellido"
-                    name="last_name"
+                    name="lastName"
                 />
                 <FormItem
                     label="Correo"
