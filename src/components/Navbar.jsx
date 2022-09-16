@@ -1,5 +1,5 @@
 import { Menu } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, MailOutlined, SettingOutlined, CarOutlined } from '@ant-design/icons';
 import { Link }  from 'react-router-dom';
 const Navbar = ({user, handleLogout}) => (
   <Menu mode="horizontal" defaultSelectedKeys={['mail']}>
@@ -14,7 +14,11 @@ const Navbar = ({user, handleLogout}) => (
     {/* Debe ser dinamico le vamos a decir que aparezca o desaparezca dependiendo el estado */}
     {/*  user ? resultado1 : resultado2 */}
     {/* user && solo elemento a mostrar */}
-    {user && <Menu.SubMenu key="user" title="El usuario" icon={<SettingOutlined />}>
+    {user && <>
+     <Menu.Item key="registerCar" icon={<CarOutlined />}>
+        <Link to="/register-car">Registrar automóvil</Link>
+    </Menu.Item>
+    <Menu.SubMenu key="user" title="El usuario" icon={<SettingOutlined />}>
       <Menu.Item key="two" icon={<AppstoreOutlined />}>
         Navigation Two
       </Menu.Item>
@@ -29,7 +33,8 @@ const Navbar = ({user, handleLogout}) => (
           cerrar sesion
         </Menu.Item>
       </Menu.ItemGroup>
-    </Menu.SubMenu>}
+    </Menu.SubMenu>
+    </>}
   </Menu>
 );
 

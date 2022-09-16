@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Layout, Avatar, Descriptions, Form, Button, Upload, message } from 'antd'
 import { FormItem } from '../components'
 import { UploadOutlined } from '@ant-design/icons';
-import { editUsernWs } from '../services/user-ws';
+import { editUserWs } from '../services/user-ws';
 const { Content } = Layout
 
 
@@ -29,7 +29,7 @@ export default function ProfilePage(props) {
     }
     const onFinish = (values) => {
         console.log("Success:", values);    
-        editUsernWs({ ...values, imageUrl })
+        editUserWs({ ...values, imageUrl })
             .then(res => {
                 const { status, data, errorMessage } = res;
                 console.log("este es el Res:",res)

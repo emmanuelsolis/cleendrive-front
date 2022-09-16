@@ -1,119 +1,131 @@
-import { Form, Modal} from "antd";
+import { useState } from "react";
+import {
+  Layout,
+  Avatar,
+  Descriptions,
+  Form,
+  Button,
+  Upload,
+  message,
+  Modal
+} from "antd";
 import { FormItem } from "../components";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-//me traigo mis servicios !! LoginWS SignupWS
-import {  carRegisterWs, carEditWs } from "../services/car-ws";
-const  RegisterCarPage= (props) => {
-  //utilizo el Hook useLocation
-  const location = useLocation()
-  const navigate = useNavigate()
+import { useLocation, useNavigate } from "react-router-dom";
+import { UploadOutlined } from "@ant-design/icons";
+import { carRegisterWs, carEditWs } from "../services/car-ws";
+import { singleUploadWs } from "../services/upload-ws";
+const { Content } = Layout;
 
+export default function CarRegisterPage(props) {
+  const [isEdit, setIsEdit] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
-  const onFinish = (values) => {
-    if(location.pathname === "/register-car" && values.password !== values.confirmPassword){
-      return Modal.error({content:"hey que paso las contraseñas no coinciden"})
-    }
-    //forma dinamica
-    const service = location.pathname === "/resgister-car" ? carRegisterWs(values) : carEditWs(values);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    service.then(res => {
-      const {data, status, errorMessage} = res;
-      if(status ){
-        
-        props.authentication(data.user)
-          Modal.success({content:'todo chido ya pudiste entrar'})
-          navigate("/profile")
-      }else {
-        //pueden guardar el errorMessa en un state para mostrarlo en el html
-        Modal.error({content:errorMessage})
+  const configUpload = {
+    name: "image",
+    // action: 'http://localhost:5005/api/upload/single',
+    action: singleUploadWs,
+    onChange(info) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList);
       }
-    })
-      
-    console.log("Success:", values);
-  };
 
+      if (info.file.status === "done") {
+        console.log("que es info", info);
+        setImageUrl(info.file.response.url.uri);
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    }
+  };
+  const onFinish = (values) => {
+    const service =
+      location.pathname === "/register-car"
+        ? carRegisterWs(values)
+        : carEditWs(values);
+    service.then((res) => {
+      const { data, status, errorMessage } = res;
+      if (status) {
+        props.authentication(data.user);
+        Modal.success({ content: "Vehículo Registrado con éxito!" });
+        navigate("/get-one/:carPlate");
+      } else {
+        //pueden guardar el errorMessa en un state para mostrarlo en el html
+        Modal.error({ content: errorMessage });
+      }
+    });
+    console.log("Success:", values);
+    carEditWs({ ...values, imageUrl }).then((res) => {
+      const { status, data, errorMessage } = res;
+      console.log("este es el Res:", res);
+      console.log("las PROPS", props.user.firstName, props.user.last_name);
+
+      if (status) {
+        props.authentication(data.user);
+      } else {
+        console.log("Error actualizar", errorMessage);
+      }
+    });
+  };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
   return (
-    <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-        {/* con mas de dos elementos */}
-        {location.pathname === "/signup" ?
+    <Content>
+      {/* Avatar o un tag img para mostrar la imagen del usuario */}
+      <Avatar
+        size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+        src={props.user.imageUrl}
+      />
+      <Button onClick={() => setIsEdit((prevState) => !prevState)}>
+        Editar Datos del Auto
+      </Button>
+      {/* Puede ser una card para mostrar informacion del usuario */}
+      {isEdit ? "se puede editar" : "no se puede"}
+      {/* {isEdit ? "poner los inputs" : "descripcion"} */}
+      {/* Modal */}
+      <Descriptions title="User Info">
         <>
-          <FormItem
-          label="Nombre"
-          name="firstName"
-          type="text"
-          />
-          <FormItem
-          label="Apellido"
-          name="lastName"
-          type="text"
-          />
-        </>  : null}
-      <FormItem
-        label="Correo"
-        name="email"
-        type="text"
-        rules={[
-          {
-            required: true,
-            message: "Coloca tu correo!",
-          },
-        ]}
-      />
-      <FormItem
-        label="Contraseña"
-        name="password"
-        type="password"
-        rules={[
-          {
-            required: true,
-            message: "Por favor ingresa tu contraseña!",
-          },
-        ]}
-      />
-      {/* && */}
-      {location.pathname === "/signup" && <FormItem 
-      label="Confirma tu contraseña"
-      name="confirmPassword"
-      type="password"
-      rules={[
-        {
-          required: true,
-          message: "Por favor ingresa tu contraseña nuevamente!",
-          },
-          ]}
-      />}
+          <Descriptions.Item label="Nombre">{`${props.user.firstName} ${props.user.lastName}`}</Descriptions.Item>
+          <Descriptions.Item label="email">
+            {props.user.email}
+          </Descriptions.Item>
+          <Descriptions.Item label="rol">{props.user.role}</Descriptions.Item>
+        </>
+      </Descriptions>
+      <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <FormItem label="Nombre" name="carName" />
+        <FormItem label="Modelo" name="carModel" />
+        <FormItem label="Marca" name="carBrand" />
+        <FormItem label="Año" name="carYear" />
+        <FormItem label="Placa" name="carPlate" />
+        <FormItem label="Color" name="carColor" />
+        <Upload {...configUpload}>
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
 
-      <FormItem
-        button_text="Enviar"
-        type="button"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      />
-      
-      {location.pathname === "/signup" ?
-      <p>Si ya tienes cuenta   <Link to="/login">ingresa!</Link></p>
-      :
-      <p>Si aun no tienes cuenta   <Link to="/signup">registrate!</Link></p>
-      }
-    </Form>
+        {location.pathname === "/register-car" ? 
+        <FormItem
+          button_text="Enviar"
+          type="button"
+          wrapperCol={{
+            offset: 8,
+            span: 16
+          }}
+        />
+        :
+        <FormItem
+          button_text="editar"
+          type="button"
+          wrapperCol={{
+            offset: 8,
+            span: 16
+          }}
+        />}
+      </Form>
+    </Content>
   );
-};
-
-export default RegisterCarPage;
+}
