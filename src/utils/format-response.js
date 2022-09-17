@@ -18,7 +18,7 @@ export function internalServerError(err) {
     }
 }
 
-export function succcesStatus(res){
+export function successStatus(res){
     return {
         status:true,
         data:res.data

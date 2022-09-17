@@ -3,6 +3,7 @@ import { Layout, Avatar, Descriptions, Form, Button, Upload, message } from 'ant
 import { FormItem } from '../components'
 import { UploadOutlined } from '@ant-design/icons';
 import { editUserWs } from '../services/user-ws';
+import { uploadURL } from '../services/api';
 const { Content } = Layout
 
 
@@ -12,7 +13,7 @@ export default function ProfilePage(props) {
     //{user,handleLogout, authentication}
     const configUpload = {
         name: 'image',
-        action: 'http://localhost:5005/api/upload/single',
+        action: uploadURL,
         onChange(info) {
             if (info.file.status !== 'uploading') {
                 console.log(info.file, info.fileList);
