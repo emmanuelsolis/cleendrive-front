@@ -30,6 +30,7 @@ export default function CarRegisterPage(props) {
     onChange(info) {
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
+        console.log("What is imageUrl", props.imageUrl, imageUrl, props.user.imageUrl)
       }
 
       if (info.file.status === "done") {

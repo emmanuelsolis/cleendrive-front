@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import './App.css';
 //iportar las rutas a utilizar
 import routes from "./config/routes"

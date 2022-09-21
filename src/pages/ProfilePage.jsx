@@ -1,15 +1,21 @@
 import { useState } from 'react'
+// import  Data  from '../services/api'
 import { Layout, Avatar, Descriptions, Form, Button, Upload, message } from 'antd'
 import { FormItem } from '../components'
 import { UploadOutlined } from '@ant-design/icons';
 import { editUserWs } from '../services/user-ws';
-import { uploadURL } from '../services/api';
-const { Content } = Layout
+import { deleteProfileWs } from '../services/user-ws';
+import { api, uploadURL } from '../services/api';
 
+const { Content } = Layout
+const { Data } = api
 
 export default function ProfilePage(props) {
+    const { user, handleLogout} = props
     const [isEdit, setIsEdit] = useState(false)
     const [imageUrl, setImageUrl] = useState('')
+    const [status, setStatus] = useState(Data);
+    
     //{user,handleLogout, authentication}
     const configUpload = {
         name: 'image',
@@ -28,13 +34,30 @@ export default function ProfilePage(props) {
             }
         },
     }
+    // useEffect(() => {
+    //     const onChange = (props) => {
+    //         deleteProfileWs(props.user._id)
+    //             .then((res) => {
+    //                 const { status, errorMessage, message } = res
+    //                 if (status) {
+    //                     setExist((prevState) => !prevState)
+    //                     Modal.success({ content: message })
+    //                 } else {
+    //                     Modal.error({ content: errorMessage })
+    //                 }
+    //             })
+    //             .cath((err) => {
+    //                 console.log(err)
+    //             })
+
+    //         }
+    // }, [exist])
+    
     const onFinish = (values) => {
-        console.log("Success:", values);    
+        // console.log("Success:", values);    
         editUserWs({ ...values, imageUrl })
             .then(res => {
                 const { status, data, errorMessage } = res;
-                console.log("este es el Res:",res)
-                    console.log("las PROPS", props.user.firstName, props.user.last_name)
 
                 if (status) {
                     props.authentication(data.user);
@@ -86,6 +109,7 @@ export default function ProfilePage(props) {
                 <FormItem label="role" name="role" disabled value={props.user.role} />
 
                 <Upload {...configUpload}>
+                    <label htmlFor="imageUrl">Elige tu imagen de Perfil</label><br />
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
 
@@ -97,7 +121,32 @@ export default function ProfilePage(props) {
                         span: 16,
                     }}
                 />
+                <FormItem
+                    button_text="Eliminar Perfil"
+                    type="button"
+                    onClick={() => setStatus(deleteProfileWs(Data)
+                    .then(() => {
+                        handleLogout(prevState => !prevState)
+                        // setExist(logoutWs((prevState) => !prevState))
+                        // logoutWs(user)
+                        // .then(() => {
+                        //     Modal.success({ content: message })
+                        //     navigate('/')
+                        // })
+                        // .catch(err => Modal.error({ content: "No se pudo eliminar su cuenta" }))
+                       
+                    })
+                    .cath((error)=>{
+                        console.log(error)
+                    }))
+                    }
+                    wrapperCol={{
+                        offset: 8,
+                        span: 16,
+                    }}
+                />
             </Form>
         </Content>
     )
 }
+               

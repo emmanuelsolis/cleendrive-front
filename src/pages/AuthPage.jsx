@@ -1,19 +1,56 @@
 import React, { useState } from "react";
-import { Form, Modal, Radio } from "antd";
+import { Form, Modal, Radio, Upload, Button, message } from "antd";
+import { UploadOutlined } from '@ant-design/icons';
 import { FormItem } from "../components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 //me traigo mis servicios !! LoginWS SignupWS
 import { loginWs, signupWs } from "../services/auth-ws";
+import { editUserWs } from "../services/user-ws";
+import { uploadURL } from '../services/api';
 const AuthPage = (props) => {
-  const [role, setRole] = useState("Client");
+  // const [role, setRole] = useState("Client");
+  const [imageUrl, setImageUrl] = useState('');
   //utilizo el Hook useLocation
   const location = useLocation();
   const navigate = useNavigate();
 
-  const onChange = (e) => {
-    setRole(role === "Client" ? "Employee" : "Client");
-    console.log(e.target.role, e.target.value);
-  };
+  
+  const onChange = () => {
+    const {...user} = props
+    
+      editUserWs(user)
+      .then(res=>{
+        const {user} = res
+        if(user.role) {
+          user.role = "Employee"
+          console.log("EL ROL" , user.role);
+        }else {
+          user.role = "Client"
+        } 
+
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    
+  }
+  const configUpload = {
+    name: 'image',
+    action: uploadURL,
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+
+        if (info.file.status === 'done') {
+            setImageUrl(info.file.response.url.uri)
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+  }
+ 
   const onFinish = (values) => {
     if (
       location.pathname === "/signup" &&
@@ -29,15 +66,13 @@ const AuthPage = (props) => {
       const { data, status, errorMessage } = res;
       if (status) {
         props.authentication(data.user);
-        Modal.success({ content: "Se registró con éxito como {props.user.role}" });
+        Modal.success({ content: "Se registró con éxito" });
         navigate("/profile");
       } else {
         //pueden guardar el errorMessa en un state para mostrarlo en el html
         Modal.error({ content: errorMessage });
       }
     });
-
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -88,9 +123,13 @@ const AuthPage = (props) => {
                 type="number"
               />
               <Radio.Group defaultValue="a" buttonStyle="solid center">
-                <Radio.Button value="{role:'Cliente'}">Registrarme Como Usuario</Radio.Button>
+                <Radio.Button value="">Registrarme Como Usuario</Radio.Button>
                 <Radio.Button value="{role:'Employee'}">Resgistrame como Empleado</Radio.Button>
               </Radio.Group>
+              <Upload {...configUpload}>
+                    <label htmlFor="imageUrl">Elige tu imagen de Perfil</label> <br />
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                </Upload>
             </>
           ) : null}
           <FormItem
