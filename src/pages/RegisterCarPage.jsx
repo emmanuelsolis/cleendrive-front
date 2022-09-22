@@ -13,8 +13,9 @@ import { FormItem } from "../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 import { carRegisterWs, carEditWs } from "../services/car-ws";
-import { singleUploadWs } from "../services/upload-ws";
-const { Content } = Layout;
+import { api, uploadURL } from "../services/api";
+const { Content, Header } = Layout;
+const { Data } = api;
 
 export default function CarRegisterPage(props) {
   const [isEdit, setIsEdit] = useState(false);
@@ -26,11 +27,16 @@ export default function CarRegisterPage(props) {
   const configUpload = {
     name: "image",
     // action: 'http://localhost:5005/api/upload/single',
-    action: singleUploadWs,
+    action: uploadURL,
     onChange(info) {
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
-        console.log("What is imageUrl", props.imageUrl, imageUrl, props.user.imageUrl)
+        console.log(
+          "What is imageUrl",
+          props.imageUrl,
+          imageUrl,
+          props.user.imageUrl
+        );
       }
 
       if (info.file.status === "done") {
@@ -52,7 +58,7 @@ export default function CarRegisterPage(props) {
       if (status) {
         props.authentication(data.user);
         Modal.success({ content: "Vehículo Registrado con éxito!" });
-        navigate("/get-one/:carPlate");
+        navigate("/main/vehiculos");
       } else {
         //pueden guardar el errorMessa en un state para mostrarlo en el html
         Modal.error({ content: errorMessage });
@@ -81,6 +87,7 @@ export default function CarRegisterPage(props) {
         size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
         src={props.user.imageUrl}
       />
+
       <Button onClick={() => setIsEdit((prevState) => !prevState)}>
         Editar Datos del Auto
       </Button>
@@ -108,24 +115,25 @@ export default function CarRegisterPage(props) {
           <Button icon={<UploadOutlined />}>Click to Upload</Button>
         </Upload>
 
-        {location.pathname === "/register-car" ? 
-        <FormItem
-          button_text="Enviar"
-          type="button"
-          wrapperCol={{
-            offset: 8,
-            span: 16
-          }}
-        />
-        :
-        <FormItem
-          button_text="editar"
-          type="button"
-          wrapperCol={{
-            offset: 8,
-            span: 16
-          }}
-        />}
+        {location.pathname === "/register-car" ? (
+          <FormItem
+            button_text="Enviar"
+            type="button"
+            wrapperCol={{
+              offset: 8,
+              span: 16
+            }}
+          />
+        ) : (
+          <FormItem
+            button_text="editar"
+            type="button"
+            wrapperCol={{
+              offset: 8,
+              span: 16
+            }}
+          />
+        )}
       </Form>
     </Content>
   );

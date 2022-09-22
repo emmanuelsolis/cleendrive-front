@@ -5,8 +5,10 @@ import {
   SettingOutlined,
   CarOutlined
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 const Navbar = ({ user, handleLogout }) => (
+
   <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
     {!user && (
       <>
@@ -45,6 +47,9 @@ const Navbar = ({ user, handleLogout }) => (
         </Menu.SubMenu>
         <Menu.Item key="registerCar" icon={<CarOutlined />}>
           <Link to="/register-car">Registrar automóvil</Link>
+        </Menu.Item>
+        <Menu.Item key="veiculos" icon={<CarOutlined />}>
+          <Link to="/main/vehiculos">Mis Coches Registrados</Link>
         </Menu.Item>
         <Menu.SubMenu
           key="cleanservices"

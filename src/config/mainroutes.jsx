@@ -1,4 +1,4 @@
-import { ProfilePage, RegisterCarPage,  } from "../pages";
+import { ProfilePage, CarsDetails,  } from "../pages";
 
 import React from 'react'
 
@@ -14,7 +14,7 @@ const mainroutes = (props) => {
     },
     {
         path: "/vehiculos",
-        element: <RegisterCarPage {...props} />
+        element: <CarsDetails {...props} />
     }
   ]
 }
