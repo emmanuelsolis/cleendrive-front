@@ -1,83 +1,131 @@
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu } from 'antd';
-import React from 'react';
-import '../index.css' 
+import React, { useState } from "react";
+import {
+  UserOutlined,
+  CarOutlined,
+  ShopOutlined,
+  ScheduleOutlined,
+  CustomerServiceOutlined
+} from "@ant-design/icons";
+import { ConfigProvider, Layout, Menu, Image, BackTop } from "antd";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import "../index.css";
+import "../App.css";
+import Navbar from "./Navbar";
+import { api } from "../services/api";
+import CarProfile from "./CarProfile";
+
+const { Data } = api;
 const { Header, Content, Footer, Sider } = Layout;
-const items1 = ['1', '2', '3'].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
+
+const style = {
+  lineHeight: "100%",
+  backgroundColor: "cyan",
+  color: "white",
+  fontSize: "20px",
+  fontWeight: "bold",
+  textAlign: "center"
+};
+
+ConfigProvider.config({
+  theme: {
+    // primaryColor: "#1DA57A"
+    primaryColor: "#bluebird"
+  }
 });
 
-const LayoutPage = (props) => (
-  <Layout>
-    <Header className="header">
-      <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-    </Header>
-    <Content
+function getItem(label, key, icon, onClick) {
+  return {
+    key,
+    icon,
+    onClick,
+    label
+  };
+}
+
+const LayoutPage = (props) => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const items = [
+    getItem("Usuario", "1", <UserOutlined />, () => {
+      navigate("/main/mi-perfil");
+    }),
+    getItem("Vehiculos", "2", <CarOutlined />, () => {
+      navigate("/main/vehiculos");
+    }),
+    getItem("Servicios", "3", <ShopOutlined />, () => {
+      navigate("/main/servicios");
+    }),
+    getItem("Ordenes", "4", <ScheduleOutlined />, () => {
+      navigate("/main/ordenes");
+    }),
+    getItem("Atencion al Cliente", "5", <CustomerServiceOutlined />, () => {
+      navigate("/main/atencion-al-cliente");
+    })
+  ];
+
+  return (
+    <Layout
       style={{
-        padding: '0 50px',
+        minHeight: "95vh"
       }}
     >
-      <Breadcrumb
-        style={{
-          margin: '16px 0',
-        }}
+      {Data && (
+        <Header className="header">
+          <Navbar />
+        </Header>
+      )}
+      <Sider
+        className="sider"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
       >
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          style={{ height: "auto" }}
+          items={items}
+        />
+      </Sider>
       <Layout
         className="site-layout-background"
         style={{
-          padding: '24px 0',
+          padding: "24px 0"
         }}
       >
-        <Sider className="site-layout-background" width={200}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
+        <div>
+          <Content
             style={{
-              height: '100%',
+              padding: "0 24px",
+              minHeight: 280
             }}
-            items={items2}
-          />
-        </Sider>
-        <Content
-          style={{
-            padding: '0 24px',
-            minHeight: 280,
-          }}
-        >
-          Content
-        </Content>
+          >
+            <div
+              className="site-layout-background"
+              style={{
+                padding: "0 24px",
+                minHeight: 280
+              }}
+            >
+              {props.children}
+            </div>
+            <BackTop>
+              <div style={style}>↑</div>
+            </BackTop>
+          </Content>
+        </div>
       </Layout>
-    </Content>
-    <Footer
-      style={{
-        textAlign: 'center',
-      }}
-    >
-      Ant Design ©2018 Created by Ant UED
-    </Footer>
-  </Layout>
-);
+      <Footer className="footer">
+        <p>
+          Todos los derechos reservados ©2022 Created by Emmanuel Solis Ruiz
+        </p>
+      </Footer>
+    </Layout>
+  );
+};
 
 export default LayoutPage;

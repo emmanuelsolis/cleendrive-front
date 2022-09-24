@@ -1,6 +1,4 @@
-import { ProfilePage, CarsDetails,  } from "../pages";
-
-import React from 'react'
+import { MyProfile, CarsDetails,  } from "../pages";
 
 const mainroutes = (props) => {
   return [
@@ -10,7 +8,7 @@ const mainroutes = (props) => {
     },
     {
         path: "/mi-perfil",
-        element: <ProfilePage {...props} />
+        element: <MyProfile {...props} />
     },
     {
         path: "/vehiculos",

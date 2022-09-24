@@ -1,5 +1,5 @@
 //importamos pages
-import {AuthPage, ProfilePage, RegisterCarPage, MainPage} from '../pages'//import v2
+import {AuthPage, ProfilePage, RegisterCarPage, MainPage, CarsDetails} from '../pages'//import v2
 const routes = (props) =>{
 //<Route path="/" element={componente}/>
 
@@ -36,6 +36,10 @@ return [
         path: '/upload/single',
         element:<RegisterCarPage {...props}/>
     },
+    {
+        path: 'car/get-cars',
+        element:<CarsDetails {...props}/>
+    }
 ]
 }
 

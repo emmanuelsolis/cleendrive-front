@@ -2,4 +2,58 @@
 .App {
   text-align: center;
 }
-
+* {
+  box-sizing: border-box;
+  /* border: solid 1px red; */
+}
+.sider {
+  width: 200;
+  height: 25vh;
+}
+.header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+.cards{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 50px 20px;
+}
+.navbar {
+  background-color: rgb(29, 205, 236);
+  font-size: larger;
+  font-weight: bold;
+  font-family: 'Cream Demo';
+  height: 50px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 50px;
+  color: white;
+}
+.footer {
+  display: flex;
+  position: fixed;
+  bottom: 10px;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  justify-content: center;
+  background-color: rgba(114, 110, 110, 0.226);
+}
+.footer p {
+  align-items: center;
+  align-content: auto;
+  margin: auto;
+  padding: auto;
+  font-size: 12px;
+  color: #999;
+}
+Icon {
+  width: 30px;
+}

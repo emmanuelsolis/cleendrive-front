@@ -1,15 +1,17 @@
 import { Menu } from "antd";
+import '../App.css';
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
-  CarOutlined
+  CarOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = ({ user, handleLogout }) => (
 
-  <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
+  <Menu mode="horizontal" defaultSelectedKeys={["mail"]} className='navbar'>
     {!user && (
       <>
         <Menu.Item key="login" icon={<MailOutlined />}>
@@ -25,26 +27,7 @@ const Navbar = ({ user, handleLogout }) => (
     {/* user && solo elemento a mostrar */}
     {user && (
       <>
-        <Menu.SubMenu key="user" title="El usuario" icon={<SettingOutlined />}>
-          <Menu.Item key="two" icon={<AppstoreOutlined />}>
-            Navigation Two
-          </Menu.Item>
-          <Menu.Item key="three" icon={<AppstoreOutlined />}>
-            Navigation Three
-          </Menu.Item>
-          <Menu.ItemGroup title="Item Group">
-            <Menu.Item key="four" icon={<AppstoreOutlined />}>
-              Navigation Four
-            </Menu.Item>
-            <Menu.Item
-              onClick={handleLogout}
-              key="five"
-              icon={<AppstoreOutlined />}
-            >
-              cerrar sesion
-            </Menu.Item>
-          </Menu.ItemGroup>
-        </Menu.SubMenu>
+        
         <Menu.Item key="registerCar" icon={<CarOutlined />}>
           <Link to="/register-car">Registrar automóvil</Link>
         </Menu.Item>
@@ -68,6 +51,26 @@ const Navbar = ({ user, handleLogout }) => (
           <Menu.Item key="Pulido y Encerado">
             Pulido y Encerado
           </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.SubMenu key="user" title="Usuario" icon={<UserOutlined />}>
+          <Menu.Item key="two" icon={<AppstoreOutlined />}>
+            Navigation Two
+          </Menu.Item>
+          <Menu.Item key="three" icon={<AppstoreOutlined />}>
+            Navigation Three
+          </Menu.Item>
+          <Menu.ItemGroup title="Item Group">
+            <Menu.Item key="four" icon={<AppstoreOutlined />}>
+              Navigation Four
+            </Menu.Item>
+            <Menu.Item
+              onClick={handleLogout}
+              key="five"
+              icon={<AppstoreOutlined />}
+            >
+              cerrar sesion
+            </Menu.Item>
+          </Menu.ItemGroup>
         </Menu.SubMenu>
       </>
     )}

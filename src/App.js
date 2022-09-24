@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import { useState, useEffect } from 'react'
 import './App.css';
 //iportar las rutas a utilizar
 import routes from "./config/routes"
@@ -10,6 +10,7 @@ import { Modal } from 'antd';
 
 function App() {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate()
   console.log("navigate", navigate);
   //funciones globales!
@@ -38,6 +39,18 @@ function handleLogout(){
     }
   })
 }
+  useEffect(() => {
+    const userLocal = localStorage.getItem("user")
+    if(userLocal){
+      setUser(JSON.parse(userLocal))
+      setIsLoading(false)
+    }else{
+      setIsLoading(false) 
+    }
+  }, [])
+  if (isLoading){
+    return <h1>Cargando...</h1>
+  }
   return(
     <div className="app">
       <Navbar user={user} handleLogout={handleLogout}/*{...{user,handleLogout}}*//>

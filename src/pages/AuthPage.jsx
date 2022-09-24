@@ -67,7 +67,7 @@ const AuthPage = (props) => {
       if (status) {
         props.authentication(data.user);
         Modal.success({ content: "Se registró con éxito" });
-        navigate("/profile");
+        navigate("/main/mi-perfil");
       } else {
         //pueden guardar el errorMessa en un state para mostrarlo en el html
         Modal.error({ content: errorMessage });
@@ -122,14 +122,6 @@ const AuthPage = (props) => {
                 name="address.zipCode"
                 type="number"
               />
-              <Radio.Group defaultValue="a" buttonStyle="solid center">
-                <Radio.Button value="">Registrarme Como Usuario</Radio.Button>
-                <Radio.Button value="{role:'Employee'}">Resgistrame como Empleado</Radio.Button>
-              </Radio.Group>
-              <Upload {...configUpload}>
-                    <label htmlFor="imageUrl">Elige tu imagen de Perfil</label> <br />
-                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
             </>
           ) : null}
           <FormItem

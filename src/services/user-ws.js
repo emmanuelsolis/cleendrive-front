@@ -11,8 +11,8 @@ export const profileWs = () =>
 api.get('/user/profile')
 .then(successStatus)
 .catch(internalServerError)
-export const myProfileWs = () =>
-api.get("/user/:id/profile")
+export const myProfileWs = (id) =>
+api.get(`/user/${id}/profile`)
 .then(successStatus)
 .catch(internalServerError)
 export const deleteProfileWs = () =>
