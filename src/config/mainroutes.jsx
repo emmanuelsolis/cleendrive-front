@@ -1,4 +1,5 @@
 import { MyProfile, CarsDetails,  } from "../pages";
+import { EditProfile } from "../components";
 
 const mainroutes = (props) => {
   return [
@@ -13,7 +14,11 @@ const mainroutes = (props) => {
     {
         path: "/vehiculos",
         element: <CarsDetails {...props} />
-    }
+    },
+    {
+        path: "/editar",
+        element: <EditProfile {...props} />
+    },
   ]
 }
 

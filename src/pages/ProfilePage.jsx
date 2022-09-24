@@ -34,24 +34,6 @@ export default function ProfilePage(props) {
             }
         },
     }
-    // useEffect(() => {
-    //     const onChange = (props) => {
-    //         deleteProfileWs(props.user._id)
-    //             .then((res) => {
-    //                 const { status, errorMessage, message } = res
-    //                 if (status) {
-    //                     setExist((prevState) => !prevState)
-    //                     Modal.success({ content: message })
-    //                 } else {
-    //                     Modal.error({ content: errorMessage })
-    //                 }
-    //             })
-    //             .cath((err) => {
-    //                 console.log(err)
-    //             })
-
-    //         }
-    // }, [exist])
     
     const onFinish = (values) => {
         // console.log("Success:", values);    
@@ -127,14 +109,6 @@ export default function ProfilePage(props) {
                     onClick={() => setStatus(deleteProfileWs(Data)
                     .then(() => {
                         handleLogout(prevState => !prevState)
-                        // setExist(logoutWs((prevState) => !prevState))
-                        // logoutWs(user)
-                        // .then(() => {
-                        //     Modal.success({ content: message })
-                        //     navigate('/')
-                        // })
-                        // .catch(err => Modal.error({ content: "No se pudo eliminar su cuenta" }))
-                       
                     })
                     .cath((error)=>{
                         console.log(error)

@@ -1,14 +1,17 @@
-import { Image, Card } from "antd";
 import React, { useState, useEffect } from 'react'
-import { Profile, EditProfile } from '../components'
-import { myProfileWs } from '../services/user-ws'
+import { Profile, EditProfile, FormItem } from '../components'
+import { Button } from 'antd'
+import { useNavigation, Link } from "react-router-dom";
+import { myProfileWs, editUserWs, deleteProfileWs } from '../services/user-ws'
 
 
 
 
 const MyProfile = (props) => {
+    const { handleLogout, Data } = props
     const [profileUser, setProfileUser] = useState([])
     const [isEdited, setIsEdited] = useState(false);
+    const [status, setStatus] = useState(Data);
     
     console.log("LAS PROPSSSS", props)
     useEffect(() => {
@@ -27,20 +30,28 @@ const MyProfile = (props) => {
   return (
     <div>
       <Profile {...props}  profileUser={ profileUser }/>
+     <Link to={"/user/edit-profile"}>Editar Perfil</Link>
+     <FormItem
+                    button_text="Eliminar Perfil"
+                    type="button"
+                    onClick={() => setStatus(deleteProfileWs(Data)
+                    .then(() => {
+                        handleLogout(prevState => !prevState)
+                    })
+                    .cath((error)=>{
+                        console.log(error)
+                    }))
+                    }
+                    wrapperCol={{
+                        offset: 8,
+                        span: 16,
+                    }}
+        />
+    
         {isEdited && <EditProfile setIsEdited={setIsEdited} />}
+      {/* {isEdited && <Link to="/user/edit-profile">Editar Perfil</Link>} */}
+
     </div>
-    // <div>
-    //   <Profile
-    //     img="https://res.cloudinary.com/dvgmi864m/image/upload/v1662520902/EventQuote/EventQuote_blanco_bzlfob.png"
-    //     name={"Jorge"}
-    //     lastName={"Garcia"}
-    //     email={'jorge@gmail.com'}
-    //     phone={123456789}
-    //     address={"Calle 123"}
-    //     role={"Client"}
-    //     />
-    //     {isEdited && <EditProfile setIsEdited={setIsEdited} />}
-    // </div>
   )
 }
 

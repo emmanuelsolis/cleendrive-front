@@ -4,7 +4,7 @@ import { Layout, Avatar, Descriptions, Form, Button, Upload, message } from 'ant
 import { FormItem } from '../components'
 import { UploadOutlined } from '@ant-design/icons';
 import { editUserWs } from '../services/user-ws';
-import { deleteProfileWs } from '../services/user-ws';
+import { useNavigate } from 'react-router-dom';
 import { api, uploadURL } from '../services/api';
 
 const { Content } = Layout
@@ -15,8 +15,9 @@ export default function ProfilePage(props) {
     const [isEdit, setIsEdit] = useState(false)
     const [imageUrl, setImageUrl] = useState('')
     const [status, setStatus] = useState(Data);
+
+    const navigate = useNavigate()
     
-    //{user,handleLogout, authentication}
     const configUpload = {
         name: 'image',
         action: uploadURL,
@@ -34,24 +35,7 @@ export default function ProfilePage(props) {
             }
         },
     }
-    // useEffect(() => {
-    //     const onChange = (props) => {
-    //         deleteProfileWs(props.user._id)
-    //             .then((res) => {
-    //                 const { status, errorMessage, message } = res
-    //                 if (status) {
-    //                     setExist((prevState) => !prevState)
-    //                     Modal.success({ content: message })
-    //                 } else {
-    //                     Modal.error({ content: errorMessage })
-    //                 }
-    //             })
-    //             .cath((err) => {
-    //                 console.log(err)
-    //             })
-
-    //         }
-    // }, [exist])
+  
     
     const onFinish = (values) => {
         // console.log("Success:", values);    
@@ -61,6 +45,7 @@ export default function ProfilePage(props) {
 
                 if (status) {
                     props.authentication(data.user);
+                    navigate("/main/mi-perfil");
                 } else {
                     console.log("Error actualizar", errorMessage)
                 }
@@ -121,20 +106,12 @@ export default function ProfilePage(props) {
                         span: 16,
                     }}
                 />
-                <FormItem
+                {/* <FormItem
                     button_text="Eliminar Perfil"
                     type="button"
                     onClick={() => setStatus(deleteProfileWs(Data)
                     .then(() => {
                         handleLogout(prevState => !prevState)
-                        // setExist(logoutWs((prevState) => !prevState))
-                        // logoutWs(user)
-                        // .then(() => {
-                        //     Modal.success({ content: message })
-                        //     navigate('/')
-                        // })
-                        // .catch(err => Modal.error({ content: "No se pudo eliminar su cuenta" }))
-                       
                     })
                     .cath((error)=>{
                         console.log(error)
@@ -144,7 +121,7 @@ export default function ProfilePage(props) {
                         offset: 8,
                         span: 16,
                     }}
-                />
+                /> */}
             </Form>
         </Content>
     )
