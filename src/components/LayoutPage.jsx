@@ -6,13 +6,12 @@ import {
   ScheduleOutlined,
   CustomerServiceOutlined
 } from "@ant-design/icons";
-import { ConfigProvider, Layout, Menu, Image, BackTop } from "antd";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { ConfigProvider, Layout, Menu,  BackTop } from "antd";
+import {  useNavigate } from "react-router-dom";
 import "../index.css";
 import "../App.css";
 import Navbar from "./Navbar";
 import { api } from "../services/api";
-import CarProfile from "./CarProfile";
 
 const { Data } = api;
 const { Header, Content, Footer, Sider } = Layout;
@@ -45,7 +44,6 @@ function getItem(label, key, icon, onClick) {
 const LayoutPage = (props) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const location = useLocation();
   const navigate = useNavigate();
 
   const items = [
@@ -101,7 +99,7 @@ const LayoutPage = (props) => {
           <Content
             style={{
               padding: "0 24px",
-              minHeight: 280
+              minHeight: "95vh"
             }}
           >
             <div

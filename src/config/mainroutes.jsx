@@ -1,4 +1,4 @@
-import { MyProfile, CarsDetails,  } from "../pages";
+import { MyProfile, CarList,  } from "../pages";
 import { EditProfile } from "../components";
 
 const mainroutes = (props) => {
@@ -13,7 +13,7 @@ const mainroutes = (props) => {
     },
     {
         path: "/vehiculos",
-        element: <CarsDetails {...props} />
+        element: <CarList {...props} />
     },
     {
         path: "/editar",
