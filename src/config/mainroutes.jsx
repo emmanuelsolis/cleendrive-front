@@ -1,4 +1,4 @@
-import { MyProfile, CarList,  } from "../pages";
+import { MyProfile, CarList, ListServices,  } from "../pages";
 import { EditProfile } from "../components";
 
 const mainroutes = (props) => {
@@ -19,6 +19,10 @@ const mainroutes = (props) => {
         path: "/editar",
         element: <EditProfile {...props} />
     },
+    {
+        path: "/servicios",
+        element: <ListServices {...props}/>
+    }
   ]
 }
 

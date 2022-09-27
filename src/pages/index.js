@@ -5,3 +5,4 @@ export { default as MainPage } from './MainPage';
 export { default as CarsDetails } from './CarsDetails';
 export { default as MyProfile } from './MyProfile';
 export { default as CarList } from './CarList';
+export { default as ListServices } from './ListServices';

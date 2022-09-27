@@ -7,16 +7,16 @@ export const carRegisterWs = (data) =>
 api.post("/car/register-car", data)
 .then(successStatus)
 .catch(internalServerError)
-export const carDetailWs = () =>
-api.get("/car/get-one/:carPlate")
+export const carDetailWs = (carPlate) =>
+api.get(`/car/get-one/${carPlate}`)
 .then(successStatus)
 .catch(internalServerError)
 export const carListWs = () =>
 api.get("/car/get-cars")
 .then(successStatus)
 .catch(internalServerError)
-export const carEditWs = (data) =>
-api.patch("/car/edit-car/:id", data)
+export const carEditWs = (data, id) =>
+api.patch(`/car/edit-car/${id}`, data)
 .then(successStatus)
 .catch(internalServerError)
 export const carDeleteWs = (data) =>

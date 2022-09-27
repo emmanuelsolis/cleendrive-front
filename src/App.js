@@ -12,7 +12,6 @@ function App() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate()
-  console.log("navigate", navigate);
   //funciones globales!
 function authentication(user){
   setUser(user)

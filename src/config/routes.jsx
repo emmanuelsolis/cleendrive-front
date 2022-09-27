@@ -1,5 +1,5 @@
 //importamos pages
-import { EditProfile } from '../components';
+import { EditProfile, EditCar } from '../components';
 import {AuthPage, ProfilePage, RegisterCarPage, MainPage, CarsDetails} from '../pages'//import v2
 const routes = (props) =>{
 //<Route path="/" element={componente}/>
@@ -44,6 +44,10 @@ return [
     {
         path: '/user/edit-profile',
         element:<EditProfile {...props}/>
+    },
+    {
+        path: '/car/edit-car',
+        element:<EditCar {...props}/>
     }
 ]
 }

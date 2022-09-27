@@ -27,13 +27,15 @@ const Navbar = ({ user, handleLogout }) => (
     {/* user && solo elemento a mostrar */}
     {user && (
       <>
-        
-        <Menu.Item key="registerCar" icon={<CarOutlined />}>
+       { (user.role === "Client") && 
+        <>
+       (<Menu.Item key="registerCar" icon={<CarOutlined />}>
           <Link to="/register-car">Registrar automóvil</Link>
         </Menu.Item>
-        <Menu.Item key="veiculos" icon={<CarOutlined />}>
+        <Menu.Item key="vehiculos" icon={<CarOutlined />}>
           <Link to="/main/vehiculos">Mis Coches Registrados</Link>
-        </Menu.Item>
+        </Menu.Item>)
+       
         <Menu.SubMenu
           key="cleanservices"
           title="Nuestros Servicios"
@@ -52,6 +54,8 @@ const Navbar = ({ user, handleLogout }) => (
             Pulido y Encerado
           </Menu.Item>
         </Menu.SubMenu>
+        </>
+       }
         <Menu.SubMenu key="user" title="Usuario" icon={<UserOutlined />}>
           <Menu.Item key="two" icon={<AppstoreOutlined />}>
             Navigation Two

@@ -16,7 +16,7 @@ const Profile = (props) => {
   useEffect(() => {
     myProfileWs(props.user._id)
         .then((res) => {
-            console.log("EL RESS",res.data.user)
+            // console.log("EL RESS",res.data.user)
             setProfileUser(res.data.user)
         })
         .catch((err) => {
