@@ -1,6 +1,6 @@
 //importamos pages
 import { EditProfile, EditCar } from '../components';
-import {AuthPage, ProfilePage, RegisterCarPage, MainPage, CarsDetails} from '../pages'//import v2
+import {AuthPage, ProfilePage, RegisterCarPage, MainPage, CarsDetails,TableOrders, OrderDetails} from '../pages'//import v2
 const routes = (props) =>{
 //<Route path="/" element={componente}/>
 
@@ -48,6 +48,14 @@ return [
     {
         path: '/car/edit-car',
         element:<EditCar {...props}/>
+    }, 
+    {
+        path: '/pages/MyOrders',
+        element:<TableOrders {...props}/>
+    },
+    {
+        path: '/pages/OrderDetails',
+        element:<OrderDetails {...props}/>
     }
 ]
 }

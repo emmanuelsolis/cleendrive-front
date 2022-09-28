@@ -1,4 +1,4 @@
-import { MyProfile, CarList, ListServices,  } from "../pages";
+import { MyProfile, CarList, ListServices, TableOrders,  } from "../pages";
 import { EditProfile } from "../components";
 
 const mainroutes = (props) => {
@@ -22,6 +22,10 @@ const mainroutes = (props) => {
     {
         path: "/servicios",
         element: <ListServices {...props}/>
+    },
+    {
+        path: "/mis-ordenes",
+        element: <TableOrders {...props}/>
     }
   ]
 }

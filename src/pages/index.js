@@ -6,3 +6,5 @@ export { default as CarsDetails } from './CarsDetails';
 export { default as MyProfile } from './MyProfile';
 export { default as CarList } from './CarList';
 export { default as ListServices } from './ListServices';
+export { default as OrderDetails } from './OrderDetails';
+export { default as TableOrders } from './MyOrders';

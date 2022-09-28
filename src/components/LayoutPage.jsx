@@ -6,12 +6,14 @@ import {
   ScheduleOutlined,
   CustomerServiceOutlined
 } from "@ant-design/icons";
-import { ConfigProvider, Layout, Menu,  BackTop } from "antd";
-import {  useNavigate } from "react-router-dom";
+import { Breadcrumb, Layout, Menu } from 'antd';
+import { ConfigProvider, BackTop } from "antd";
+import {  useNavigate, Link } from "react-router-dom";
 import "../index.css";
 import "../App.css";
 import Navbar from "./Navbar";
 import { api } from "../services/api";
+
 
 const { Data } = api;
 const { Header, Content, Footer, Sider } = Layout;
@@ -31,6 +33,7 @@ ConfigProvider.config({
     primaryColor: "#bluebird"
   }
 });
+type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -46,7 +49,7 @@ const LayoutPage = (props) => {
 
   const navigate = useNavigate();
 
-  const items = [
+  const items: MenuItem[] = [
     getItem("Usuario", "1", <UserOutlined />, () => {
       navigate("/main/mi-perfil");
     }),
@@ -57,9 +60,9 @@ const LayoutPage = (props) => {
       navigate("/main/servicios");
     }),
     getItem("Ordenes", "4", <ScheduleOutlined />, () => {
-      navigate("/main/ordenes");
+        navigate("/main/mis-ordenes");
     }),
-    getItem("Atencion al Cliente", "5", <CustomerServiceOutlined />, () => {
+    getItem("Atencion al Cliente", "7", <CustomerServiceOutlined />, () => {
       navigate("/main/atencion-al-cliente");
     })
   ];
@@ -85,7 +88,6 @@ const LayoutPage = (props) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          style={{ height: "auto" }}
           items={items}
         />
       </Sider>
@@ -109,7 +111,7 @@ const LayoutPage = (props) => {
                 minHeight: 280
               }}
             >
-              {props.children}
+               {props.children}
             </div>
             <BackTop>
               <div style={style}>↑</div>

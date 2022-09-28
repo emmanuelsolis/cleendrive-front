@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import {Row, Col, Button, Divider, Typography } from "antd";
-import { ServiceForm, ServiceCard } from '../components';
+import {Row, Col, Button, Divider, Typography, Carousel } from "antd";
+import { ServiceForm, ServiceCard,   } from '../components';
 import { serviceListWs } from '../services/cleanServices-ws';
 
 
+const contentStyle = {
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
 
 const ListServices = (props) => {
     const [serviceCards, setserviceCards] = useState([]);
     const [isCreate, setIsCreate] = useState(false);
     const [beingCreated, setBeingCreated] = useState(false);
+  
 
+    const onChange = (currentSlide) => {
+        console.log(currentSlide);
+      };
     useEffect(() => {
         serviceListWs()
             .then( res => {
@@ -37,14 +48,19 @@ const ListServices = (props) => {
                 <Row gutter={[40, 16]}>
                     {serviceCards.map( service => {
                         return(
-                            <Col span={8}>
-                                <ServiceCard 
-                                img={service.photoServiceUrl}
-                                name={service.typeService}
-                                price={service.price}
-                                description={service.description}
-                                deliverTime={service.deliverTime}/>
-                            </Col>
+                            <Carousel afterChange={onChange}>
+                                <Col span={40}>
+                                    <ServiceCard 
+                                    img={service.photoServiceUrl}
+                                    name={service.typeService}
+                                    price={service.price}
+                                    description={service.description}
+                                    deliverTime={service.deliverTime}
+                                        
+                                    />
+                                    
+                                </Col>
+                            </Carousel>
                         )
                     })}    
                 </Row>

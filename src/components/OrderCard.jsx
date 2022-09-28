@@ -2,8 +2,7 @@ import { Card } from 'antd';
 
 const { Meta } = Card;
 
-const ServiceCard = (props) => {
-
+const OrderCard = (props) => {
     console.log("LOS PROPS", props);
     return (
         <div className="cards">
@@ -14,6 +13,7 @@ const ServiceCard = (props) => {
                 cover={<img alt="example" src={props.img} />}
             >
                 <Meta title={props.name} description={props.description} /><br />
+                <span>Número de Orden: {props.orderNumber}</span>
                 <span><b>Precio del Servicio:</b> ${props.price}.00</span><br />
                 <span><b>Tiempo de entrega:  </b>{props.deliverTime}hrs</span>
             </Card>
@@ -21,4 +21,4 @@ const ServiceCard = (props) => {
     )
 }
 
-export default ServiceCard
+export default OrderCard
