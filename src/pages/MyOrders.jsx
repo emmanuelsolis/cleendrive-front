@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { OrderCard } from '../components'
 import { myOrdersWs, employeeOrdersWs } from '../services/order-ws'
-import { Space, Table, List }  from 'antd'
+import { Space, Table, List, Row, Col, Divider, Typography }  from 'antd'
+import { api } from '../services/api'
+
+
 
 const colums = [
     {
@@ -15,18 +19,14 @@ const colums = [
     },
     {
         title: 'Fecha',
-        dataIndex: 'eventDate',
-        key: 'eventDate',
+        dataIndex: 'updatedAt',
+        key: 'updatedAt',
     },
-    {
-        title: 'Solicitante',
-        dataIndex: '_owner',
-        key: '_owner',
-    },
+  
     {
         title: 'Nombre del Cliente',
-        dataIndex: 'customerName',
-        key: 'customerName',
+        dataIndex: '_owner.firstName',
+        key: '_owner.firstName',
     },
     {
         title: 'Teléfono del Cliente',
@@ -35,15 +35,10 @@ const colums = [
     },
     {
         title: 'Dirección del Cliente',
-        dataIndex: 'customerAddress',
-        key: 'customerAddress',
+        dataIndex: 'address',
+        key: 'address',
     },
-    {
-        title: 'Precio',
-        dataIndex: 'servicePrice',
-        key: 'servicePrice',
-    },
-    {
+       {
         title: 'Subtotal',
         dataIndex: 'subtotal',
         key: 'subtotal',
@@ -55,26 +50,23 @@ const colums = [
     },
     {
         title: 'Estado',
-        dataIndex: 'status',
-        key: 'status',
+        dataIndex: 'serviceStatus',
+        key: 'serviceStatus',
     }
 
 ]
 
 const TableOrders = (props) => {
+    const {data,  user } = api
+    const [userProfile, setUserProfile] = useState(data)
     const [orders, setOrders] = useState([])
-    const [status, setStatus] = useState();
+    const [isCreated, setIsCreated] = useState(false);
+    const [beingCreated, setBeingCreated] = useState();
+    const [status, setStatus] = useState('Pending');
 
-    useEffect(() => {
-        if(props.user.role === 'Employee'){
-            employeeOrdersWs()
-                .then( res => {
-                    setOrders(res.data.orders)
-                })
-                .catch( err => {
-                    console.log(err)
-                })
-        } else {
+    // const { role } = props.userProfile
+    useEffect((props) => {
+        if( 'Client'){
             myOrdersWs()
                 .then( res => {
                     setOrders(res.data.orders)
@@ -82,12 +74,42 @@ const TableOrders = (props) => {
                 .catch( err => {
                     console.log(err)
                 })
+        } else {
+            
+            employeeOrdersWs()
+            .then((res) => {
+
+                    setOrders(res.data.orders)
+                })
+                .catch( err => {
+                    console.log(err)
+                })
         }
-    }, [])
+    }, [setOrders])
 
     return (
-        <div>
+        <div className='cards'>
+            <Typography.Title level={1}>Mis Ordenes</Typography.Title>
+            <Divider orientation="center" />
             <Table columns={colums} dataSource={orders} />
+            <Row gutter={[40, 16]}>
+            {orders.map(order => (
+                <OrderCard
+                    order={order}
+                    number={order.orderNumber}
+                    name={order.typeService}
+                    date={order.updatedAt}
+                    client={order.user}
+                    phone={order.customerPhone}
+                    address={order.customerAddress}
+                    subtotal={order.subtotal}
+                    payment={order.paymentMethod}
+                    description={order.description}
+                    status={order.serviceStatus}
+                />
+            ))}
+
+            </Row>
         </div>
     )
 }

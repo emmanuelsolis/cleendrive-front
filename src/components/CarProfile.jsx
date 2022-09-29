@@ -13,7 +13,6 @@ const CarProfile = (props) => {
   const [carData, setCarData] = useState([]);
   const [status, setStatus] = useState(Data);
   const [isEdited, setIsEdited] = useState();
- const { carPhoto } = props.profileUser
   useEffect(() => {
     carDetailWs(props.car.carPlate, props.car._id)
         .then((res) => {

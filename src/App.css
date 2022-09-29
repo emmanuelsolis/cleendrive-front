@@ -67,3 +67,12 @@
 Icon {
   width: 30px;
 }
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  padding-inline-end: 20px;
+  margin-right: 70px;
+}

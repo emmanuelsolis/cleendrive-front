@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Divider, Typography, Carousel } from "antd";
 import { ServiceForm, ServiceCard } from "../components";
 import { serviceListWs } from "../services/cleanServices-ws";
+import { placeOrderWs } from "../services/order-ws";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const contentStyle = {
   height: "160px",
@@ -12,15 +14,23 @@ const contentStyle = {
 };
 
 const ListServices = (props) => {
+    const [order, setOrder] = useState(null);
   const [serviceCards, setserviceCards] = useState([]);
   const [isCreate, setIsCreate] = useState(false);
   const [beingCreated, setBeingCreated] = useState(false);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+
   const onChange = (currentSlide) => {
       console.log(currentSlide);
     };
     useEffect(() => {
         serviceListWs()
         .then((res) => {
+            console.log("EL RESS",res.data.user)
+            console.log("EL RESSDATASERVICES",res.data.services)
             setserviceCards(res.data.services);
         })
         .catch((err) => {

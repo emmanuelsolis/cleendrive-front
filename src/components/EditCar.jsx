@@ -25,7 +25,7 @@ const EditCar = ({beingCreated, setBeingCreated}) => {
         }
     }
     const onFinish = (values) => {
-      carEditWs({ ...values, imageUrl: imageURL})
+      carEditWs({ ...values, carPhoto: imageURL})
         .then((res) => {
             if(res.data){
                 setBeingCreated(!beingCreated)
@@ -71,7 +71,7 @@ const EditCar = ({beingCreated, setBeingCreated}) => {
                 <Form.Item name="carPlate" rules={[{required: true, message: 'Por favor ingresa la placa del coche'}]}>
                     <Input placeholder="Placa del coche" />
                 </Form.Item>
-                <Form.Item valuePropName='fileList' name="imageUrl" rules={[{required: true, message: 'Por favor ingresa la imagen del coche'}]}>
+                <Form.Item valuePropName='fileList' name="carPhoto" rules={[{required: true, message: 'Por favor ingresa la imagen del coche'}]}>
                     <Upload {...configUpload} listType="picture-card">
                     <div>
                         <PlusOutlined />
