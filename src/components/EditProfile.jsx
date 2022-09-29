@@ -4,19 +4,20 @@ import { Layout, Avatar, Descriptions, Form, Button, Upload, message } from 'ant
 import { FormItem } from '../components'
 import { UploadOutlined } from '@ant-design/icons';
 import { editUserWs } from '../services/user-ws';
-import { deleteProfileWs } from '../services/user-ws';
+import { useNavigate } from 'react-router-dom';
 import { api, uploadURL } from '../services/api';
 
 const { Content } = Layout
 const { Data } = api
 
 export default function ProfilePage(props) {
-    const { user, handleLogout} = props
+    const {  handleLogout} = props
     const [isEdit, setIsEdit] = useState(false)
     const [imageUrl, setImageUrl] = useState('')
     const [status, setStatus] = useState(Data);
+
+    const navigate = useNavigate()
     
-    //{user,handleLogout, authentication}
     const configUpload = {
         name: 'image',
         action: uploadURL,
@@ -34,6 +35,7 @@ export default function ProfilePage(props) {
             }
         },
     }
+  
     
     const onFinish = (values) => {
         // console.log("Success:", values);    
@@ -43,6 +45,7 @@ export default function ProfilePage(props) {
 
                 if (status) {
                     props.authentication(data.user);
+                    navigate("/main/mi-perfil");
                 } else {
                     console.log("Error actualizar", errorMessage)
                 }
@@ -103,7 +106,7 @@ export default function ProfilePage(props) {
                         span: 16,
                     }}
                 />
-                <FormItem
+                {/* <FormItem
                     button_text="Eliminar Perfil"
                     type="button"
                     onClick={() => setStatus(deleteProfileWs(Data)
@@ -118,7 +121,7 @@ export default function ProfilePage(props) {
                         offset: 8,
                         span: 16,
                     }}
-                />
+                /> */}
             </Form>
         </Content>
     )
