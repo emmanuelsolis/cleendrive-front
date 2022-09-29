@@ -10,8 +10,8 @@ import { Modal } from 'antd';
 
 function App() {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate()
-  console.log("navigate", navigate);
   //funciones globales!
 function authentication(user){
   setUser(user)
@@ -38,6 +38,18 @@ function handleLogout(){
     }
   })
 }
+  useEffect(() => {
+    const userLocal = localStorage.getItem("user")
+    if(userLocal){
+      setUser(JSON.parse(userLocal))
+      setIsLoading(false)
+    }else{
+      setIsLoading(false) 
+    }
+  }, [])
+  if (isLoading){
+    return <h1>Cargando...</h1>
+  }
   return(
     <div className="app">
       <Navbar user={user} handleLogout={handleLogout}/*{...{user,handleLogout}}*//>

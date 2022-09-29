@@ -9,7 +9,6 @@ import { Form, Input, Button } from "antd"
         ]}
  */
 const renderItem = (props) => {
-  console.log("props: ", props.name);
   switch (props.type) {
     case 'password':
       return <Input.Password />
