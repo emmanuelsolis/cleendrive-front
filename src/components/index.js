@@ -10,3 +10,4 @@ export {default as ServiceForm} from './ServiceForm';
 export {default as ServiceCard} from './ServiceCard';
 export {default as OrderForm} from './OrderForm';
 export {default as OrderCard} from './OrderCard';
+export {default as Cover} from './Cover';

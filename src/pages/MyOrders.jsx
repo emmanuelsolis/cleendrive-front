@@ -25,8 +25,8 @@ const colums = [
   
     {
         title: 'Nombre del Cliente',
-        dataIndex: '_owner.firstName',
-        key: '_owner.firstName',
+        dataIndex: '_id.firstName',
+        key: '_id.firstName',
     },
     {
         title: 'Teléfono del Cliente',

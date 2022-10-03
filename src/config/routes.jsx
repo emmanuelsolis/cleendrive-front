@@ -1,13 +1,13 @@
 //importamos pages
 import { EditProfile, EditCar } from '../components';
-import {AuthPage, ProfilePage, RegisterCarPage, MainPage, CarsDetails,TableOrders, OrderDetails} from '../pages'//import v2
+import {AuthPage, ProfilePage, RegisterCarPage, MainPage, CarsDetails,TableOrders, OrderDetails, HomePage} from '../pages'//import v2
 const routes = (props) =>{
 //<Route path="/" element={componente}/>
 
 return [
     {
         path:'/',//Homepage
-        element:<h1>Este el es Home</h1>
+        element:<HomePage {...props}/>
     },
     {
         path:'/main/*',

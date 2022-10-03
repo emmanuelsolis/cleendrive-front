@@ -8,3 +8,4 @@ export { default as CarList } from './CarList';
 export { default as ListServices } from './ListServices';
 export { default as OrderDetails } from './OrderDetails';
 export { default as TableOrders } from './MyOrders';
+export { default as HomePage } from './HomePage';

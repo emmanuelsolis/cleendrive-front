@@ -1,11 +1,11 @@
-import { MyProfile, CarList, ListServices, TableOrders,  } from "../pages";
+import { MyProfile, CarList, ListServices, TableOrders, HomePage  } from "../pages";
 import { EditProfile } from "../components";
 
 const mainroutes = (props) => {
   return [
     {
-        path: "/dashboard",
-        element: <h1>Dashboard</h1>
+        path: "/",
+        element: <HomePage {...props}/>
     },
     {
         path: "/mi-perfil",

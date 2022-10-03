@@ -6,7 +6,7 @@ import {
   ScheduleOutlined,
   CustomerServiceOutlined
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu } from 'antd';
+import {  Layout, Menu } from 'antd';
 import { ConfigProvider, BackTop } from "antd";
 import {  useNavigate, Link } from "react-router-dom";
 import "../index.css";
@@ -33,7 +33,7 @@ ConfigProvider.config({
     primaryColor: "#bluebird"
   }
 });
-type MenuItem = Required<MenuProps>['items'][number];
+// type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(label, key, icon, onClick) {
   return {
