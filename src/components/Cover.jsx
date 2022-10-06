@@ -68,6 +68,7 @@ const Cover = () => {
 
           return (
             <div className="slider-section">
+                <h1>Lavar tu coche nunca fue más cómodo</h1>
               <video
                 className = {className}
                 key={item.id}
